@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexaBank customer dashboard">
+  <title>NexaBank | Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard-page">
+  <div class="loading-line"></div>
+
+  <aside class="sidebar">
+    <a class="brand" href="/dashboard.html">
+      <span class="brand-mark">N</span>
+      <span>NexaBank</span>
+    </a>
+
+    <nav class="nav-list">
+      <a class="nav-link active" href="#overview"><span class="nav-icon">⌂</span> Overview</a>
+      <a class="nav-link" href="#accounts"><span class="nav-icon">▣</span> My accounts</a>
+      <a class="nav-link" href="#transactions"><span class="nav-icon">↕</span> Transactions</a>
+      <button class="nav-link" type="button" data-open-modal="transferModal"><span class="nav-icon">➜</span> Transfer money</button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="profile-chip">
+        <span id="profileAvatar" class="avatar">DP</span>
+        <div class="profile-meta">
+          <strong id="profileName">Customer</strong>
+          <span id="profileEmail">customer@nexabank.com</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-shell">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button class="mobile-menu" type="button" aria-label="Open navigation">☰</button>
+        <div>
+          <h1>Account overview</h1>
+          <p id="todayText">Your banking activity at a glance</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="refreshButton" class="btn btn-secondary" type="button">Refresh</button>
+        <button class="btn btn-secondary" type="button" data-logout>Logout</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="overview" class="hero-card">
+        <div class="hero-copy">
+          <span>Personal banking</span>
+          <h2>Good to see you, <span id="heroName">Customer</span>.</h2>
+          <p>Everything you need to manage your money is right here.</p>
+        </div>
+        <div class="hero-balance">
+          <span>Total available balance</span>
+          <strong id="heroBalance">₹0.00</strong>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Account summary">
+        <article class="stat-card">
+          <span class="stat-icon">₹</span>
+          <p>Total balance</p>
+          <strong id="totalBalance">₹0.00</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon">#</span>
+          <p>Active accounts</p>
+          <strong id="accountCount">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon">↕</span>
+          <p>Transactions</p>
+          <strong id="transactionCount">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon">✓</span>
+          <p>Profile status</p>
+          <strong>Verified</strong>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article id="accounts" class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>My accounts</h3>
+              <p>Balances update after every operation</p>
+            </div>
+            <button class="btn btn-secondary" type="button" data-open-modal="accountModal">+ New account</button>
+          </div>
+          <div class="panel-body">
+            <div id="accountList" class="account-list"></div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Quick actions</h3>
+              <p>Move and manage funds</p>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="quick-actions">
+              <button class="quick-action" type="button" data-open-modal="depositModal"><b>＋</b><span>Deposit</span></button>
+              <button class="quick-action" type="button" data-open-modal="withdrawModal"><b>−</b><span>Withdraw</span></button>
+              <button class="quick-action" type="button" data-open-modal="transferModal"><b>➜</b><span>Transfer</span></button>
+              <button class="quick-action" type="button" data-open-modal="accountModal"><b>▣</b><span>New account</span></button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="transactions" class="panel section-stack">
+        <div class="panel-header">
+          <div>
+            <h3>Recent transactions</h3>
+            <p>Activity across all your accounts</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Account</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody id="transactionTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="accountModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header"><h3>Open a new account</h3><button class="modal-close" type="button" data-close-modal>✕</button></div>
+      <div class="modal-body">
+        <form id="accountForm" class="form-grid">
+          <div class="field"><label for="newAccountNumber">Account number</label><input id="newAccountNumber" type="text" placeholder="SB10004" required></div>
+          <div class="field"><label for="newAccountType">Account type</label><select id="newAccountType" required><option value="SAVINGS">Savings</option><option value="CURRENT">Current</option></select></div>
+          <div class="field"><label for="openingBalance">Opening balance</label><input id="openingBalance" type="number" min="0" step="0.01" value="0" required></div>
+          <button class="btn btn-primary btn-block" type="submit">Create account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="depositModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header"><h3>Deposit money</h3><button class="modal-close" type="button" data-close-modal>✕</button></div>
+      <div class="modal-body">
+        <form id="depositForm" class="form-grid">
+          <div class="field"><label for="depositAccount">Select account</label><select id="depositAccount" class="account-select" required></select></div>
+          <div class="field"><label for="depositAmount">Amount</label><input id="depositAmount" type="number" min="1" step="0.01" placeholder="1000" required></div>
+          <button class="btn btn-primary btn-block" type="submit">Confirm deposit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="withdrawModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header"><h3>Withdraw money</h3><button class="modal-close" type="button" data-close-modal>✕</button></div>
+      <div class="modal-body">
+        <form id="withdrawForm" class="form-grid">
+          <div class="field"><label for="withdrawAccount">Select account</label><select id="withdrawAccount" class="account-select" required></select></div>
+          <div class="field"><label for="withdrawAmount">Amount</label><input id="withdrawAmount" type="number" min="1" step="0.01" placeholder="500" required></div>
+          <button class="btn btn-primary btn-block" type="submit">Confirm withdrawal</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="transferModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header"><h3>Transfer money</h3><button class="modal-close" type="button" data-close-modal>✕</button></div>
+      <div class="modal-body">
+        <form id="transferForm" class="form-grid">
+          <div class="field"><label for="transferFrom">From account</label><select id="transferFrom" class="account-select" required></select></div>
+          <div class="field"><label for="transferTo">Receiver account number</label><input id="transferTo" type="text" placeholder="SB10002" required></div>
+          <div class="field"><label for="transferAmount">Amount</label><input id="transferAmount" type="number" min="1" step="0.01" placeholder="1000" required></div>
+          <button class="btn btn-primary btn-block" type="submit">Transfer securely</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

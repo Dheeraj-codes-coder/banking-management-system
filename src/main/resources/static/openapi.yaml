@@ -1,0 +1,393 @@
+openapi: 3.0.3
+info:
+  title: Banking Management System API
+  version: 1.0.0
+  description: REST API for customers, bank accounts and transactions.
+servers:
+  - url: http://localhost:8080
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Customer:
+      type: object
+      required: [name, email, phone, address, password]
+      properties:
+        customerId:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: integer
+          format: int64
+        address:
+          type: string
+        password:
+          type: string
+          format: password
+          writeOnly: true
+        role:
+          type: string
+          readOnly: true
+    Account:
+      type: object
+      required: [accountNumber, accountType]
+      properties:
+        accountId:
+          type: integer
+          readOnly: true
+        accountNumber:
+          type: string
+        accountType:
+          type: string
+          enum: [SAVINGS, CURRENT]
+        balance:
+          type: number
+          format: double
+paths:
+  /customer/save:
+    post:
+      summary: Register a customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Customer saved
+        '400':
+          description: Validation failed
+  /login:
+    get:
+      summary: Verify login credentials
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Login successful
+        '401':
+          description: Invalid credentials
+  /customer/fetch:
+    get:
+      summary: Fetch all customers
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Customers returned
+  /customer/find/{customerId}:
+    get:
+      summary: Find a customer
+      security:
+        - basicAuth: []
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Customer returned
+  /customer/update/{customerId}:
+    patch:
+      summary: Update a customer
+      security:
+        - basicAuth: []
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: Update result
+  /customer/delete/{customerId}:
+    delete:
+      summary: Delete a customer as an administrator
+      security:
+        - basicAuth: []
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Delete result
+  /account/fetch:
+    get:
+      summary: Fetch all accounts
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Accounts returned
+  /account/find/{accountId}:
+    get:
+      summary: Find an account
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Account returned
+  /account/customer/{customerId}:
+    get:
+      summary: Fetch accounts belonging to a customer
+      security:
+        - basicAuth: []
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Accounts returned
+  /account/balance/{accountId}:
+    get:
+      summary: Check an account balance
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Balance returned
+  /account/save/{customerId}:
+    post:
+      summary: Create an account
+      security:
+        - basicAuth: []
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account created
+  /account/deposit/{accountId}/{amount}:
+    patch:
+      summary: Deposit money
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: amount
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Deposit result
+  /account/withdraw/{accountId}/{amount}:
+    patch:
+      summary: Withdraw money
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: amount
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Withdrawal result
+  /account/transfer/{fromAccountId}/{toAccountId}/{amount}:
+    patch:
+      summary: Transfer money
+      security:
+        - basicAuth: []
+      parameters:
+        - name: fromAccountId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toAccountId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: amount
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Transfer result
+  /transaction/account/{accountId}:
+    get:
+      summary: Fetch an account transaction history
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transactions returned
+  /transaction/fetch:
+    get:
+      summary: Fetch all transactions as an administrator
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Transactions returned
+  /customer/me:
+    get:
+      summary: Fetch the authenticated customer profile
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Authenticated profile returned
+  /account/my:
+    get:
+      summary: Fetch the authenticated customer's accounts
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Customer accounts returned
+  /account/my/save:
+    post:
+      summary: Open an account for the authenticated customer
+      security:
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account creation result
+  /account/my/deposit/{accountId}/{amount}:
+    patch:
+      summary: Deposit into an owned account
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: amount
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Deposit result
+  /account/my/withdraw/{accountId}/{amount}:
+    patch:
+      summary: Withdraw from an owned account
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: amount
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Withdrawal result
+  /account/my/transfer/{fromAccountId}/{toAccountNumber}/{amount}:
+    patch:
+      summary: Transfer from an owned account
+      security:
+        - basicAuth: []
+      parameters:
+        - name: fromAccountId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toAccountNumber
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: amount
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Transfer result
+  /transaction/my/{accountId}:
+    get:
+      summary: Fetch transaction history for an owned account
+      security:
+        - basicAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transaction history returned

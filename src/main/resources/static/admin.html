@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexaBank administration dashboard">
+  <title>NexaBank | Administration</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard-page">
+  <div class="loading-line"></div>
+
+  <aside class="sidebar">
+    <a class="brand" href="/admin.html"><span class="brand-mark">N</span><span>NexaBank</span></a>
+    <nav class="nav-list">
+      <a class="nav-link active" href="/admin.html"><span class="nav-icon">⌂</span> Overview</a>
+      <a class="nav-link" href="/customers.html"><span class="nav-icon">◎</span> Customers</a>
+      <a class="nav-link" href="/accounts.html"><span class="nav-icon">▣</span> Accounts</a>
+      <a class="nav-link" href="/transactions.html"><span class="nav-icon">↕</span> Transactions</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="profile-chip">
+        <span id="profileAvatar" class="avatar">BA</span>
+        <div class="profile-meta"><strong id="profileName">Bank Admin</strong><span id="profileEmail">admin@bank.com</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-shell">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button class="mobile-menu" type="button" aria-label="Open navigation">☰</button>
+        <div><h1>Administration</h1><p>System-wide banking operations</p></div>
+      </div>
+      <div class="topbar-actions">
+        <button id="refreshButton" class="btn btn-secondary" type="button">Refresh</button>
+        <button class="btn btn-secondary" type="button" data-logout>Logout</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="overview" class="hero-card">
+        <div class="hero-copy">
+          <span>Administrator workspace</span>
+          <h2>Banking operations, clearly controlled.</h2>
+          <p>Monitor customers, balances and transaction activity from one secure view.</p>
+        </div>
+        <div class="hero-balance"><span>Total funds managed</span><strong id="heroBalance">₹0.00</strong></div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card"><span class="stat-icon">◎</span><p>Customers</p><strong id="customerCount">0</strong></article>
+        <article class="stat-card"><span class="stat-icon">▣</span><p>Accounts</p><strong id="accountCount">0</strong></article>
+        <article class="stat-card"><span class="stat-icon">↕</span><p>Transactions</p><strong id="transactionCount">0</strong></article>
+        <article class="stat-card"><span class="stat-icon">₹</span><p>Total balance</p><strong id="totalBalance">₹0.00</strong></article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-header"><div><h3>Management</h3><p>Open a dedicated administration page</p></div></div>
+          <div class="panel-body">
+            <div class="quick-actions">
+              <a class="quick-action" href="/customers.html"><b>◎</b><span>Manage customers</span></a>
+              <a class="quick-action" href="/accounts.html"><b>▣</b><span>View accounts</span></a>
+              <a class="quick-action" href="/transactions.html"><b>↕</b><span>View transactions</span></a>
+              <a class="quick-action" href="/openapi.yaml" target="_blank"><b>{ }</b><span>API documentation</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header"><div><h3>Security status</h3><p>Current application protection</p></div></div>
+          <div class="panel-body account-list">
+            <div class="account-row"><div class="account-name"><span class="account-symbol">✓</span><div><strong>Administrator access</strong><span>Role verification enabled</span></div></div></div>
+            <div class="account-row"><div class="account-name"><span class="account-symbol">#</span><div><strong>Password protection</strong><span>BCrypt hashes stored in MySQL</span></div></div></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel section-stack">
+        <div class="panel-header"><div><h3>Recent transactions</h3><p>Latest activity across the banking system</p></div><a class="btn btn-secondary" href="/transactions.html">View all</a></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Account ID</th><th>Description</th><th>Type</th><th>Amount</th></tr></thead>
+            <tbody id="recentTransactionTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

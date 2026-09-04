@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexaBank secure digital banking dashboard">
+  <title>NexaBank | Sign in</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-showcase">
+      <a class="brand" href="/">
+        <span class="brand-mark">N</span>
+        <span>NexaBank</span>
+      </a>
+
+      <div class="showcase-copy">
+        <span class="eyebrow"><span class="trust-dot"></span> Secure digital banking</span>
+        <h1>Your money.<br><span>Your momentum.</span></h1>
+        <p>Manage accounts, move money and follow every transaction through one focused, secure banking experience.</p>
+      </div>
+
+      <div class="trust-row">
+        <span class="trust-item"><span class="trust-dot"></span> BCrypt protection</span>
+        <span class="trust-item"><span class="trust-dot"></span> Role-based access</span>
+        <span class="trust-item"><span class="trust-dot"></span> Live transaction history</span>
+      </div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="brand">
+          <span class="brand-mark">N</span>
+          <span>NexaBank</span>
+        </div>
+        <h2>Welcome back</h2>
+        <p>Enter your registered email and password to access your dashboard.</p>
+
+        <form id="loginForm" class="form-grid">
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="username" required>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button class="password-toggle" data-password-toggle="#password" type="button">Show</button>
+            </div>
+          </div>
+
+          <div id="loginMessage" class="form-message" role="alert"></div>
+          <button id="loginButton" class="btn btn-primary btn-block" type="submit">Sign in securely</button>
+        </form>
+
+        <div class="demo-box">
+          <strong>Administrator demo</strong>
+          admin@bank.com &nbsp; / &nbsp; Admin@123
+        </div>
+
+        <div class="auth-footnote">New to NexaBank? <a href="/register.html">Create an account</a></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

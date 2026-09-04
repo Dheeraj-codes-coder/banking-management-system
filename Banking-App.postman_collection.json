@@ -1,0 +1,132 @@
+{
+  "info": {
+    "name": "Banking App",
+    "description": "Postman requests for the Spring Boot Banking Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{adminEmail}}", "type": "string" },
+      { "key": "password", "value": "{{adminPassword}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin@bank.com"
+    },
+    {
+      "key": "adminPassword",
+      "value": "Admin@123"
+    }
+  ],
+  "item": [
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "Save Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dheeraj Patil\",\n  \"email\": \"dheeraj@gmail.com\",\n  \"phone\": 9876543210,\n  \"address\": \"Kalaburagi\",\n  \"password\": \"Dheeraj@123\"\n}"
+            },
+            "url": "{{baseUrl}}/customer/save"
+          }
+        },
+        {
+          "name": "Fetch Customers",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/fetch"
+          }
+        },
+        {
+          "name": "Find Customer",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/find/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Save Account",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountNumber\": \"SB10001\",\n  \"accountType\": \"SAVINGS\",\n  \"balance\": 5000\n}"
+            },
+            "url": "{{baseUrl}}/account/save/1"
+          }
+        },
+        {
+          "name": "Fetch Accounts",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/account/fetch"
+          }
+        },
+        {
+          "name": "Deposit",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/account/deposit/1/1000"
+          }
+        },
+        {
+          "name": "Withdraw",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/account/withdraw/1/500"
+          }
+        },
+        {
+          "name": "Transfer",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/account/transfer/1/2/1000"
+          }
+        },
+        {
+          "name": "Check Balance",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/account/balance/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transaction",
+      "item": [
+        {
+          "name": "Account Transaction History",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transaction/account/1"
+          }
+        },
+        {
+          "name": "Fetch All Transactions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transaction/fetch"
+          }
+        }
+      ]
+    }
+  ]
+}

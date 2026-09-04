@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Register for NexaBank digital banking">
+  <title>NexaBank | Register</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-showcase">
+      <a class="brand" href="/">
+        <span class="brand-mark">N</span>
+        <span>NexaBank</span>
+      </a>
+
+      <div class="showcase-copy">
+        <span class="eyebrow"><span class="trust-dot"></span> Start banking smarter</span>
+        <h1>Built around<br><span>your ambitions.</span></h1>
+        <p>Create your secure profile, open an account and take control of your everyday banking from any device.</p>
+      </div>
+
+      <div class="trust-row">
+        <span class="trust-item"><span class="trust-dot"></span> Fast registration</span>
+        <span class="trust-item"><span class="trust-dot"></span> Encrypted password</span>
+        <span class="trust-item"><span class="trust-dot"></span> Responsive dashboard</span>
+      </div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="brand">
+          <span class="brand-mark">N</span>
+          <span>NexaBank</span>
+        </div>
+        <h2>Create your profile</h2>
+        <p>Enter your details exactly as you want them to appear in your banking profile.</p>
+
+        <form id="registerForm" class="form-grid two-column">
+          <div class="field full">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" placeholder="Dheeraj Patil" autocomplete="name" required>
+          </div>
+
+          <div class="field full">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input id="phone" name="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="9876543210" required>
+          </div>
+
+          <div class="field">
+            <label for="address">City / Address</label>
+            <input id="address" name="address" type="text" placeholder="Kalaburagi" required>
+          </div>
+
+          <div class="field full">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <input id="password" name="password" type="password" minlength="6" placeholder="Minimum 6 characters" autocomplete="new-password" required>
+              <button class="password-toggle" data-password-toggle="#password" type="button">Show</button>
+            </div>
+          </div>
+
+          <div id="registerMessage" class="form-message field full" role="alert"></div>
+          <button id="registerButton" class="btn btn-primary btn-block field full" type="submit">Create secure profile</button>
+        </form>
+
+        <div class="auth-footnote">Already registered? <a href="/index.html">Sign in</a></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/register.js"></script>
+</body>
+</html>

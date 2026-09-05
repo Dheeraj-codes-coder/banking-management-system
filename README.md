@@ -1,5 +1,11 @@
 # Banking Management System
 
+## Live Demo
+
+🔗 [Open Banking Management System](https://banking-management-system-4aw8.onrender.com)
+
+> The application uses free hosting, so the first load may take up to 60 seconds.
+
 A Spring Boot and MySQL REST API project for managing customers, accounts and banking transactions.
 
 The project includes a responsive HTML, CSS and JavaScript frontend served directly by Spring Boot.
